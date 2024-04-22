@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.oa.mapper.OaAttendanceRecordMapper">
+    
+    <resultMap type="OaAttendanceRecord" id="OaAttendanceRecordResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="attendanceTime"    column="attendance_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectOaAttendanceRecordVo">
+        select id, create_by, attendance_time, create_time, update_by, update_time, remark from oa_attendance_record
+    </sql>
+
+    <select id="selectOaAttendanceRecordList" parameterType="OaAttendanceRecord" resultMap="OaAttendanceRecordResult">
+        <include refid="selectOaAttendanceRecordVo"/>
+        <where>  
+            <if test="params.beginAttendanceTime != null and params.beginAttendanceTime != '' and params.endAttendanceTime != null and params.endAttendanceTime != ''"> and attendance_time between #{params.beginAttendanceTime} and #{params.endAttendanceTime}</if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectOaAttendanceRecordById" parameterType="Long" resultMap="OaAttendanceRecordResult">
+        <include refid="selectOaAttendanceRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOaAttendanceRecord" parameterType="OaAttendanceRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into oa_attendance_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">create_by,</if>
+            <if test="attendanceTime != null">attendance_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createBy != null">#{createBy},</if>
+            <if test="attendanceTime != null">#{attendanceTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="startTime != null">startTime,</if>
+            <if test="endTime != null">endTime,</if>
+         </trim>
+    </insert>
+
+    <update id="updateOaAttendanceRecord" parameterType="OaAttendanceRecord">
+        update oa_attendance_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="attendanceTime != null">attendance_time = #{attendanceTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOaAttendanceRecordById" parameterType="Long">
+        delete from oa_attendance_record where id = #{id}
+    </delete>
+
+    <delete id="deleteOaAttendanceRecordByIds" parameterType="String">
+        delete from oa_attendance_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

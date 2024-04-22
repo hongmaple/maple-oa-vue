@@ -3,12 +3,10 @@ package com.ruoyi.common.utils;
 import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.Date;
+import java.util.Set;
+
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
@@ -187,5 +185,21 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         LocalDateTime localDateTime = LocalDateTime.of(temporalAccessor, LocalTime.of(0, 0, 0));
         ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
         return Date.from(zdt.toInstant());
+    }
+
+    public static long getWorkingDaysBetweenTwoDates(LocalDate startDate, LocalDate endDate, Set<LocalDate> holidays) {
+//        Set<DayOfWeek> businessDays = Set.of(
+//                DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY
+//        );
+//
+//        return startDate.datesUntil(endDate)
+//                .filter(date -> businessDays.contains(date.getDayOfWeek()))
+//                .filter(date -> !holidays.contains(date))
+//                .count();
+        return 1;
+    }
+
+    public static DayOfWeek getDayOfWeek(LocalDate date) {
+        return date.getDayOfWeek();
     }
 }

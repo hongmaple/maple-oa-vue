@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.oa.mapper.OaHolidayMapper">
+    
+    <resultMap type="OaHoliday" id="OaHolidayResult">
+        <result property="id"    column="id"    />
+        <result property="date"    column="date"    />
+        <result property="type"    column="type"    />
+        <result property="typeDes"    column="type_des"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectOaHolidayVo">
+        select id, date, type, type_des, create_by, create_time, update_by, update_time from oa_holiday
+    </sql>
+
+    <select id="selectOaHolidayList" parameterType="OaHoliday" resultMap="OaHolidayResult">
+        <include refid="selectOaHolidayVo"/>
+        <where>  
+            <if test="params.beginDate != null and params.beginDate != '' and params.endDate != null and params.endDate != ''"> and date between #{params.beginDate} and #{params.endDate}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="typeDes != null  and typeDes != ''"> and type_des = #{typeDes}</if>
+        </where>
+    </select>
+    
+    <select id="selectOaHolidayById" parameterType="Long" resultMap="OaHolidayResult">
+        <include refid="selectOaHolidayVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOaHoliday" parameterType="OaHoliday">
+        insert into oa_holiday
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="date != null">date,</if>
+            <if test="type != null">type,</if>
+            <if test="typeDes != null">type_des,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="date != null">#{date},</if>
+            <if test="type != null">#{type},</if>
+            <if test="typeDes != null">#{typeDes},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+    <insert id="insertOaHolidayList">
+        INSERT INTO oa_holiday (`date`, `type`, `type_des`, `create_by`, `create_time`)
+        VALUES
+        <foreach collection="holidays" index="" item="holiday" separator=",">
+            (#{holiday.date},
+            #{holiday.type},
+            #{holiday.typeDes},
+            #{holiday.createBy},
+            now())
+        </foreach>
+    </insert>
+
+    <update id="updateOaHoliday" parameterType="OaHoliday">
+        update oa_holiday
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="date != null">date = #{date},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="typeDes != null">type_des = #{typeDes},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOaHolidayById" parameterType="Long">
+        delete from oa_holiday where id = #{id}
+    </delete>
+
+    <delete id="deleteOaHolidayByIds" parameterType="String">
+        delete from oa_holiday where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
