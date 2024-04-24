@@ -72,12 +72,12 @@
       </el-table-column>
       <el-table-column label="上班时间" align="center" prop="startTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.startTime, '{h}:{i}:{s}') }}</span>
+          <span>{{ scope.row.startTime }}</span>
         </template>
       </el-table-column>
       <el-table-column label="下班时间" align="center" prop="endTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endTime, '{h}:{i}:{s}') }}</span>
+          <span>{{ scope.row.endTime}}</span>
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" />
@@ -122,7 +122,7 @@
           <el-time-select
             v-model="form.startTime"
             :picker-options="{
-                  start: '08:30',
+                  start: '03:30',
                   step: '00:15',
                   end: '12:30'
                 }"
@@ -134,7 +134,7 @@
           <el-time-select
             v-model="form.endTime"
             :picker-options="{
-                  start: '14:30',
+                  start: '3:30',
                   step: '00:15',
                   end: '19:30'
                 }"

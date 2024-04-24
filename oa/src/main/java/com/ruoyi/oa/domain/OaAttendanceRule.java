@@ -1,5 +1,7 @@
 package com.ruoyi.oa.domain;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -29,14 +31,12 @@ public class OaAttendanceRule extends BaseEntity
     private String restDay;
 
     /** 上班时间 */
-    @JsonFormat(pattern = "hh:mm")
-    @Excel(name = "上班时间", width = 30, dateFormat = "hh:mm")
-    private Date startTime;
+    @Excel(name = "上班时间", width = 30)
+    private LocalTime startTime;
 
     /** 下班时间 */
-    @JsonFormat(pattern = "hh:mm")
-    @Excel(name = "下班时间", width = 30, dateFormat = "hh:mm")
-    private Date endTime;
+    @Excel(name = "下班时间", width = 30)
+    private LocalTime endTime;
 
     public void setId(Long id) 
     {
@@ -65,21 +65,21 @@ public class OaAttendanceRule extends BaseEntity
     {
         return restDay;
     }
-    public void setStartTime(Date startTime) 
+    public void setStartTime(LocalTime  startTime)
     {
         this.startTime = startTime;
     }
 
-    public Date getStartTime() 
+    public LocalTime getStartTime()
     {
         return startTime;
     }
-    public void setEndTime(Date endTime) 
+    public void setEndTime(LocalTime  endTime)
     {
         this.endTime = endTime;
     }
 
-    public Date getEndTime() 
+    public LocalTime  getEndTime()
     {
         return endTime;
     }

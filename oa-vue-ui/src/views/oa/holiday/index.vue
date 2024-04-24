@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}">
+      <el-form-item label="日期">
         <el-date-picker
           v-model="daterangeDate"
           style="width: 240px"
@@ -12,8 +12,8 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="${comment}" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择${comment}" clearable>
+      <el-form-item label="日期" prop="type">
+        <el-select v-model="queryParams.type" placeholder="请选择日期" clearable>
           <el-option
             v-for="dict in dict.type.holiday_type"
             :key="dict.value"
@@ -22,10 +22,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="${comment}" prop="typeDes">
+      <el-form-item label="日期" prop="typeDes">
         <el-input
           v-model="queryParams.typeDes"
-          placeholder="请输入${comment}"
+          placeholder="请输入日期"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -84,18 +84,18 @@
 
     <el-table v-loading="loading" :data="holidayList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="date" width="180">
+      <el-table-column label="id" align="center" prop="id" />
+      <el-table-column label="日期" align="center" prop="date" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.date, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="${comment}" align="center" prop="type">
+      <el-table-column label="类型" align="center" prop="type">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.holiday_type" :value="scope.row.type"/>
         </template>
       </el-table-column>
-      <el-table-column label="${comment}" align="center" prop="typeDes" />
+      <el-table-column label="描述" align="center" prop="typeDes" />
       <el-table-column label="创建者" align="center" prop="createBy" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -127,7 +127,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -139,16 +139,16 @@
     <!-- 添加或修改节假日对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="date">
+        <el-form-item label="日期" prop="date">
           <el-date-picker clearable
             v-model="form.date"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择${comment}">
+            placeholder="请选择日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="${comment}" prop="type">
-          <el-select v-model="form.type" placeholder="请选择${comment}">
+        <el-form-item label="类型" prop="type">
+          <el-select v-model="form.type" placeholder="请选择类型">
             <el-option
               v-for="dict in dict.type.holiday_type"
               :key="dict.value"
@@ -157,8 +157,8 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="${comment}" prop="typeDes">
-          <el-input v-model="form.typeDes" placeholder="请输入${comment}" />
+        <el-form-item label="描述" prop="typeDes">
+          <el-input v-model="form.typeDes" placeholder="请输入描述" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -1,7 +1,16 @@
 package com.ruoyi.oa.service.impl;
 
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateUtil;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.oa.domain.OaAttendanceRecord;
+import com.ruoyi.oa.service.IOaAttendanceRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.oa.mapper.OaApprovalMapper;
@@ -19,6 +28,9 @@ public class OaApprovalServiceImpl implements IOaApprovalService
 {
     @Autowired
     private OaApprovalMapper oaApprovalMapper;
+
+    @Autowired
+    private IOaAttendanceRecordService attendanceRecordService;
 
     /**
      * 查询审批
@@ -67,6 +79,24 @@ public class OaApprovalServiceImpl implements IOaApprovalService
     public int updateOaApproval(OaApproval oaApproval)
     {
         oaApproval.setUpdateTime(DateUtils.getNowDate());
+        if (oaApproval.getType().equals("0")&&oaApproval.getStatus().equals("1")) {
+            Map<String,Object> params = new HashMap<>(2);
+            Date nowDate =oaApproval.getStartTime();
+            params.put("beginAttendanceTime", DateUtil.format(DateUtil.beginOfDay(nowDate),"yyyy-MM-dd HH:mm:ss"));
+            params.put("endAttendanceTime",DateUtil.format(DateUtil.endOfDay(nowDate),"yyyy-MM-dd HH:mm:ss"));
+            // 获取当前时间
+            OaAttendanceRecord query = new OaAttendanceRecord();
+            query.setCreateBy(oaApproval.getCreateBy());
+            query.setParams(params);
+            List<OaAttendanceRecord> oaAttendanceRecords =attendanceRecordService.selectOaAttendanceRecordList(query);
+            if (CollectionUtil.isEmpty(oaAttendanceRecords)) {
+                //判断补上午还是下午
+            } else {
+                //判断补上午还是下午
+            }
+            OaAttendanceRecord updateR = new OaAttendanceRecord();
+           // attendanceRecordService.updateOaAttendanceRecord()
+        }
         return oaApprovalMapper.updateOaApproval(oaApproval);
     }
 

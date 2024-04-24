@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectOaHolidayList" parameterType="OaHoliday" resultMap="OaHolidayResult">
         <include refid="selectOaHolidayVo"/>
         <where>  
-            <if test="params.beginDate != null and params.beginDate != '' and params.endDate != null and params.endDate != ''"> and date between #{params.beginDate} and #{params.endDate}</if>
+            <if test="params.beginDate != null and params.endDate != null"> and date between #{params.beginDate} and #{params.endDate}</if>
             <if test="type != null "> and type = #{type}</if>
             <if test="typeDes != null  and typeDes != ''"> and type_des = #{typeDes}</if>
         </where>

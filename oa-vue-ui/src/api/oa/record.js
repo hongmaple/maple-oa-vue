@@ -18,6 +18,16 @@ export function myListRecord(query) {
   })
 }
 
+// 查询打卡统计
+export function myAttendanceStatistics(query) {
+  return request({
+    url: '/oa/record/myAttendanceStatistics',
+    method: 'get',
+    params: query
+  })
+}
+
+
 // 查询打卡记录详细
 export function getRecord(id) {
   return request({

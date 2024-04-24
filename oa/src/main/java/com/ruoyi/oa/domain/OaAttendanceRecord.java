@@ -1,9 +1,12 @@
 package com.ruoyi.oa.domain;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -23,19 +26,20 @@ public class OaAttendanceRecord extends BaseEntity
     private Long id;
 
     /** 打卡时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "打卡时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date attendanceTime;
 
     /** 上班时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "上班时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date startTime;
+    @Excel(name = "上班时间", width = 30)
+    private LocalTime  startTime;
 
     /** 下班时间 */
+    @Excel(name = "下班时间", width = 30)
+    private LocalTime  endTime;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "下班时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date endTime;
+    private Date nowDate;
 
     /**
      * 阳历日期
@@ -49,6 +53,10 @@ public class OaAttendanceRecord extends BaseEntity
     private OaHoliday holiday;
 
     private List<OaAttendanceRecord> list;
+
+    private Integer year;// 获取当前年份
+
+    private Integer month;// 获取当前月份
 
     public void setId(Long id) 
     {
@@ -64,24 +72,24 @@ public class OaAttendanceRecord extends BaseEntity
         this.attendanceTime = attendanceTime;
     }
 
-    public Date getAttendanceTime() 
+    public Date  getAttendanceTime()
     {
         return attendanceTime;
     }
 
-    public Date getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalTime  startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalTime  endTime) {
         this.endTime = endTime;
     }
 
@@ -115,6 +123,30 @@ public class OaAttendanceRecord extends BaseEntity
 
     public void setList(List<OaAttendanceRecord> list) {
         this.list = list;
+    }
+
+    public Date getNowDate() {
+        return nowDate;
+    }
+
+    public void setNowDate(Date nowDate) {
+        this.nowDate = nowDate;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
     }
 
     @Override

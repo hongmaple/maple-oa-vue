@@ -140,7 +140,7 @@ public class OaAttendanceRecordController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('oa:record:myList')")
     @GetMapping("/myAttendanceStatistics")
-    public AjaxResult myAttendanceStatistics(@RequestBody OaAttendanceRecord oaAttendanceRecord) {
+    public AjaxResult myAttendanceStatistics(OaAttendanceRecord oaAttendanceRecord) {
         List<OaAttendanceRule> oaAttendanceRules = oaAttendanceRuleService.selectOaAttendanceRuleList(new OaAttendanceRule());
         if (CollectionUtil.isNotEmpty(oaAttendanceRules)) {
             oaAttendanceRecord.setStartTime(oaAttendanceRules.get(0).getStartTime());

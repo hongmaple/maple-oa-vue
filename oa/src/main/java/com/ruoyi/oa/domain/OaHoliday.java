@@ -30,16 +30,17 @@ public class OaHoliday extends BaseEntity
     /** $column.columnComment */
     private Long id;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /** 日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "日期")
     private Date date;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /** 类型 */
+    @Excel(name = "类型", readConverterExp = "0:工作日,1:休息日,2:节假日")
     private Integer type;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /** 描述 */
+    @Excel(name = "描述")
     private String typeDes;
 
     public void setId(Long id) 
